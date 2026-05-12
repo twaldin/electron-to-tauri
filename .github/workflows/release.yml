@@ -1,0 +1,115 @@
+name: Release Desktop Apps
+
+on:
+  push:
+    tags:
+      - "v*"
+
+permissions:
+  contents: write
+
+jobs:
+  create-release:
+    name: Create GitHub release
+    runs-on: ubuntu-22.04
+    outputs:
+      release_id: ${{ steps.release.outputs.release_id }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Create or reuse release
+        id: release
+        env:
+          GH_TOKEN: ${{ github.token }}
+          TAG_NAME: ${{ github.ref_name }}
+        run: |
+          gh release view "$TAG_NAME" >/dev/null 2>&1 || \
+            gh release create "$TAG_NAME" \
+              --title "$TAG_NAME" \
+              --notes "Desktop Tauri webview wrapper builds for Discord and Slack."
+          echo "release_id=$(gh release view "$TAG_NAME" --json databaseId --jq .databaseId)" >> "$GITHUB_OUTPUT"
+
+  build:
+    name: Build ${{ matrix.app_name }} on ${{ matrix.platform }}
+    needs: create-release
+    runs-on: ${{ matrix.platform }}
+
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - app_name: Discord
+            app_path: apps/tauri-discord
+            platform: macos-latest
+            args: --target x86_64-apple-darwin
+          - app_name: Discord
+            app_path: apps/tauri-discord
+            platform: macos-latest
+            args: --target aarch64-apple-darwin
+          - app_name: Discord
+            app_path: apps/tauri-discord
+            platform: ubuntu-22.04
+            args: ""
+          - app_name: Discord
+            app_path: apps/tauri-discord
+            platform: windows-latest
+            args: ""
+          - app_name: Slack
+            app_path: apps/tauri-slack
+            platform: macos-latest
+            args: --target x86_64-apple-darwin
+          - app_name: Slack
+            app_path: apps/tauri-slack
+            platform: macos-latest
+            args: --target aarch64-apple-darwin
+          - app_name: Slack
+            app_path: apps/tauri-slack
+            platform: ubuntu-22.04
+            args: ""
+          - app_name: Slack
+            app_path: apps/tauri-slack
+            platform: windows-latest
+            args: ""
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Install Linux dependencies
+        if: matrix.platform == 'ubuntu-22.04'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libwebkit2gtk-4.1-dev \
+            libayatana-appindicator3-dev \
+            librsvg2-dev \
+            patchelf
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Install macOS cross target
+        if: contains(matrix.args, 'apple-darwin')
+        shell: bash
+        run: rustup target add "${ARGS#--target }"
+        env:
+          ARGS: ${{ matrix.args }}
+
+      - name: Build and upload release assets
+        uses: tauri-apps/tauri-action@v1
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        with:
+          projectPath: ${{ matrix.app_path }}
+          releaseId: ${{ needs.create-release.outputs.release_id }}
+          tagName: ${{ github.ref_name }}
+          releaseName: ${{ github.ref_name }}
+          releaseBody: "Desktop Tauri webview wrapper builds for Discord and Slack."
+          releaseDraft: false
+          prerelease: ${{ contains(github.ref_name, '-') }}
+          args: ${{ matrix.args }}
+          includeDebug: false
+          uploadUpdaterJson: false
+          releaseAssetNamePattern: "[name]-[version]-[platform]-[arch][ext]"

@@ -1,29 +1,32 @@
 # electron-to-tauri
 
-A small collection of popular Electron-style apps rebuilt as simple Tauri webview
-wrappers.
+My collection of popular Electron-style apps running in Tauri webviews.
 
-These apps intentionally start as thin webview shells around the official web
-apps. No full desktop-app functionality or feature parity is promised. Voice,
-screen sharing, notifications, tray behavior, deep links, and other native
-features may need per-app work or may be limited by the platform webview.
+These are intentionally thin wrappers around the official web apps. No full
+desktop-app functionality or feature parity is promised. Voice, screen sharing,
+notifications, tray behavior, deep links, and other native features may need
+per-app work or may be limited by the platform webview.
 
 ## Apps
 
-- Discord: `https://discord.com/app`
-- Slack: `https://app.slack.com/client`
+- Discord: `apps/tauri-discord` wraps `https://discord.com/app`
+- Slack: `apps/tauri-slack` wraps `https://app.slack.com/client`
 
-## Run
-
-Discord:
+## Run Locally
 
 ```sh
-cargo run
+cargo run -p tauri-discord
+cargo run -p tauri-slack
 ```
 
-Slack:
+## Releases
+
+Tagged releases build downloadable desktop app bundles with GitHub Actions:
 
 ```sh
-cd apps/tauri-slack
-cargo run
+git tag v0.1.0
+git push origin v0.1.0
 ```
+
+The release workflow builds Discord and Slack wrappers for macOS, Windows, and
+Linux, then uploads the installers to the GitHub Release.
