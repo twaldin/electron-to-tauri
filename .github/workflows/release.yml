@@ -77,6 +77,11 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: lts/*
+
       - name: Install Linux dependencies
         if: matrix.platform == 'ubuntu-22.04'
         run: |
@@ -98,7 +103,7 @@ jobs:
           ARGS: ${{ matrix.args }}
 
       - name: Build and upload release assets
-        uses: tauri-apps/tauri-action@v1
+        uses: tauri-apps/tauri-action@action-v0.6.2
         env:
           GITHUB_TOKEN: ${{ github.token }}
         with:
@@ -112,4 +117,4 @@ jobs:
           args: ${{ matrix.args }}
           includeDebug: false
           uploadUpdaterJson: false
-          releaseAssetNamePattern: "[name]-[version]-[platform]-[arch][ext]"
+          assetNamePattern: "[name]-[version]-[platform]-[arch][ext]"
