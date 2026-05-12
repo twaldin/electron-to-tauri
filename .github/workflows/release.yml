@@ -116,5 +116,4 @@ jobs:
           prerelease: ${{ contains(github.ref_name, '-') }}
           args: ${{ matrix.args }}
           includeDebug: false
-          uploadUpdaterJson: false
           assetNamePattern: "[name]-[version]-[platform]-[arch][ext]"
