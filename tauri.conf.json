@@ -1,0 +1,22 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Tauri Discord",
+  "version": "0.1.0",
+  "identifier": "com.timwaldin.tauri-discord",
+  "bundle": {
+    "active": false,
+    "icon": []
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "Discord",
+        "width": 1200,
+        "height": 800,
+        "url": "https://discord.com/app",
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36",
+        "devtools": true
+      }
+    ]
+  }
+}

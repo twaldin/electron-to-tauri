@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "https://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>NSCameraUsageDescription</key>
+  <string>Tauri Slack needs camera access for Slack huddles and calls.</string>
+  <key>NSMicrophoneUsageDescription</key>
+  <string>Tauri Slack needs microphone access for Slack huddles and calls.</string>
+  <key>NSScreenCaptureUsageDescription</key>
+  <string>Tauri Slack needs screen recording access for Slack screen sharing.</string>
+  <key>NSAudioCaptureUsageDescription</key>
+  <string>Tauri Slack needs system audio capture access for Slack screen sharing audio.</string>
+</dict>
+</plist>

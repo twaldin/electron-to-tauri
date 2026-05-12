@@ -1,0 +1,22 @@
+{
+  "$schema": "https://schema.tauri.app/config/2",
+  "productName": "Tauri Slack",
+  "version": "0.1.0",
+  "identifier": "com.timwaldin.tauri-slack",
+  "bundle": {
+    "active": false,
+    "icon": []
+  },
+  "app": {
+    "windows": [
+      {
+        "title": "Slack",
+        "width": 1200,
+        "height": 800,
+        "url": "https://app.slack.com/client",
+        "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/136.0.0.0 Safari/537.36",
+        "devtools": true
+      }
+    ]
+  }
+}

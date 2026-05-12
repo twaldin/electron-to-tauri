@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "https://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>NSCameraUsageDescription</key>
+  <string>Tauri Discord needs camera access for Discord video calls.</string>
+  <key>NSMicrophoneUsageDescription</key>
+  <string>Tauri Discord needs microphone access for Discord voice calls.</string>
+  <key>NSScreenCaptureUsageDescription</key>
+  <string>Tauri Discord needs screen recording access for Discord screen share.</string>
+  <key>NSAudioCaptureUsageDescription</key>
+  <string>Tauri Discord needs system audio capture access for Discord screen share audio.</string>
+</dict>
+</plist>
